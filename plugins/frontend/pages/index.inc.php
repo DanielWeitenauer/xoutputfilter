@@ -1,7 +1,7 @@
 <?php
 
 /**
- * frontend Plugin für XOutputFilter
+ * frontend Plugin fï¿½r XOutputFilter
  *
  * @author andreaseberhard[at]gmail[dot]com Andreas Eberhard
  * @author <a href="http://www.redaxo.de">www.redaxo.de</a>
@@ -10,7 +10,7 @@
  * @version svn:$Id$
  */
 
-// Sprachmenü
+// Sprachmenï¿½
 xoutputfilter_langtoolbar($subpage);
 
 $table = $REX['TABLE_PREFIX'] . '420_xoutputfilter';
@@ -18,6 +18,7 @@ $func = rex_request('func', 'string', '');
 $entry_id = rex_request('entry_id', 'int', -1);
 $fieldSet = $I18N->Msg('xoutputfilter_frontend_fieldset');
 $filter = rex_request('filter', 'int', 0);
+$clang = $REX['CUR_CLANG'];
 
 // Filter setzen
 if ($filter === 1)
@@ -31,7 +32,7 @@ if (!isset($_SESSION['xoutputfilter']['frontend']['filter1']))
   $_SESSION['xoutputfilter']['frontend']['filter2'] = '';
 }
 
-// Hinzufügen / Bearbeiten
+// Hinzufï¿½gen / Bearbeiten
 if ($func == 'add' || $func == 'edit')
 {
 
@@ -151,7 +152,7 @@ if ($func == 'active')
 }
 
 
-// Löschen
+// Lï¿½schen
 if ($func == 'delete')
 {
   $query = "delete from $table where id='".$entry_id."' ";
