@@ -1,7 +1,7 @@
 <?php
 
 /**
- * import_export Plugin für XOutputFilter
+ * import_export Plugin fï¿½r XOutputFilter
  *
  * @author andreaseberhard[at]gmail[dot]com Andreas Eberhard
  * @author <a href="http://www.redaxo.de">www.redaxo.de</a>
@@ -106,8 +106,9 @@ function xoutputfilter_getImportDir()
  */
 function xoutputfilter_readImportFolder($fileprefix)
 {
-  $folder = '';
-  usort($folder = xoutputfilter_readFilteredFolder(xoutputfilter_getImportDir(), $fileprefix), 'xoutputfilter_compareFiles');
+  $folder = xoutputfilter_readFilteredFolder(xoutputfilter_getImportDir(), $fileprefix);
+  usort($folder, 'xoutputfilter_compareFiles');
+
   return $folder;
 }
 
@@ -122,7 +123,7 @@ global $I18N;
   $output = '';
   $fields = array();
 
-  // Query zusammenbasteln und Daten auswählen
+  // Query zusammenbasteln und Daten auswï¿½hlen
   $table = $REX['TABLE_PREFIX'] . '420_xoutputfilter';
   $where = ' WHERE typ = 0 ';
   if ($ex['abbrev']=='1')
@@ -141,7 +142,7 @@ global $I18N;
   $sql = new rex_sql();
   $sql->setQuery($query);
 
-  // Daten für Ausgabe aufbereiten
+  // Daten fï¿½r Ausgabe aufbereiten
   foreach($sql->getArray() as $d)
   {
     if($output == '')
@@ -222,7 +223,7 @@ function xoutputfilter_export_sql($ex)
 
   $table = $REX['TABLE_PREFIX'] . '420_xoutputfilter';
 
-  // Header für SQL-Export
+  // Header fï¿½r SQL-Export
   $output = '## Redaxo Database Dump Version '.$REX['VERSION'].$nl;
   $output .= '## Prefix '.$REX['TABLE_PREFIX'].$nl;
   $output .= '## charset '.$I18N->msg('htmlcharset').$nl.$nl;
@@ -257,13 +258,13 @@ function xoutputfilter_export_sql($ex)
     // else ?
   }
 
-  // Query zusammenbasteln und Daten auswählen
+  // Query zusammenbasteln und Daten auswï¿½hlen
   $where = ' ';
   $query = 'SELECT * FROM ' . $table . $where . ' ORDER BY typ ASC, lang ASC, name ASC, marker ASC ';
   $sql->freeResult();
   $sql->setQuery($query);
 
-  // SQL für insert aufbauen
+  // SQL fï¿½r insert aufbauen
   while($sql->hasNext())
   {
     $record = array();
@@ -298,7 +299,7 @@ function xoutputfilter_export_sql($ex)
     unset($values);
   }
 
-  // Footer für SQL-Export
+  // Footer fï¿½r SQL-Export
   $output .= $nl;
   $output .= $nl."/*!40000 ALTER TABLE `$table` ENABLE KEYS */;";
   $output .= $nl."UNLOCK TABLES;".$nl.$nl;
@@ -408,7 +409,7 @@ function xoutputfilter_import_csv($ex)
     }
   }
 
-  // SQL's ausführen
+  // SQL's ausfï¿½hren
   //$sql = rex_sql::factory();
   $sql = new rex_sql();
   $sql->debugsql = 0;
@@ -454,7 +455,7 @@ function xoutputfilter_import_sql($ex)
   $filename = xoutputfilter_getImportDir() . '/' . $ex['filename'];
   $conts = rex_get_file_contents($filename);
 
-  // Versionsstempel prüfen
+  // Versionsstempel prï¿½fen
   // ## Redaxo Database Dump Version x.x
   $version = strpos($conts, '## Redaxo Database Dump Version '.$REX['VERSION']);
   if($version === false)
@@ -468,7 +469,7 @@ function xoutputfilter_import_sql($ex)
   // Versionsstempel entfernen
   $conts = trim(str_replace('## Redaxo Database Dump Version '.$REX['VERSION'], '', $conts));
 
-  // Prefix prüfen
+  // Prefix prï¿½fen
   // ## Prefix xxx_
   if(preg_match('/^## Prefix ([a-zA-Z0-9\_]*)/', $conts, $matches) && isset($matches[1]))
   {
@@ -485,7 +486,7 @@ function xoutputfilter_import_sql($ex)
     return;
   }
 
-  // Charset prüfen
+  // Charset prï¿½fen
   // ## charset xxx_
   if(preg_match('/^## charset ([a-zA-Z0-9\_\-]*)/', $conts, $matches) && isset($matches[1]))
   {
@@ -517,7 +518,7 @@ function xoutputfilter_import_sql($ex)
   // Prefix im export mit dem der installation angleichen
   if($REX['TABLE_PREFIX'] != $prefix)
   {
-    // Hier case-insensitiv ersetzen, damit alle möglich Schreibweisen (TABLE TablE, tAblE,..) ersetzt werden
+    // Hier case-insensitiv ersetzen, damit alle mï¿½glich Schreibweisen (TABLE TablE, tAblE,..) ersetzt werden
     // Dies ist wichtig, da auch SQLs innerhalb von Ein/Ausgabe der Module vom rex-admin verwendet werden
     $conts = preg_replace('/(TABLE `?)' . preg_quote($prefix, '/') .'/i', '$1'. $REX['TABLE_PREFIX'], $conts);
     $conts = preg_replace('/(INTO `?)'  . preg_quote($prefix, '/') .'/i', '$1'. $REX['TABLE_PREFIX'], $conts);
